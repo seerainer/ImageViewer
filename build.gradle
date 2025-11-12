@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'eclipse'
     id 'application'
-    id 'org.graalvm.buildtools.native' version '0.11.2'
+    id 'org.graalvm.buildtools.native' version '0.11.3'
 }
 
 group = 'io.github.seerainer.imageviewer'
@@ -198,7 +198,7 @@ tasks.withType(Jar).configureEach {
 task buildRustLib(type: Exec) {
     description = 'Build Rust image processing library'
     group = 'rust'
-    
+
     workingDir file('rs-image')
     commandLine 'cargo', 'build', '--release'
 }
@@ -206,12 +206,12 @@ task buildRustLib(type: Exec) {
 task copyRustLib(type: Copy) {
     description = 'Copy Rust library to build directory'
     group = 'rust'
-    
+
     dependsOn buildRustLib
-    
+
     from file('rs-image/target/release')
     into file('build/native')
-    
+
     if (os.contains("win")) {
         include 'rs_image.dll'
     } else if (os.contains("mac")) {
