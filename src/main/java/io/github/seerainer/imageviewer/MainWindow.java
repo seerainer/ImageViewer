@@ -6,12 +6,14 @@ import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -52,6 +54,7 @@ public class MainWindow {
     private ResizeFilter currentResizeFilter = ResizeFilter.TRIANGLE;
     private final List<String> folderImages = new ArrayList<>();
     private int currentImageIndex = -1;
+    private Color backgroundColor;
 
     public MainWindow(final Display display, final String filePath) {
 	this.display = display;
@@ -274,8 +277,18 @@ public class MainWindow {
 
 	menuSeparator(viewMenu);
 	createMenuItem(viewMenu, "Full &Screen\tEnter", SWT.NONE, this::handleToggleFullScreen);
-
 	menuSeparator(viewMenu);
+	createMenuItem(viewMenu, "&Background Color...", SWT.NONE, () -> {
+	    final var colorDialog = new ColorDialog(shell);
+	    final var selectedColor = colorDialog.open();
+	    if (selectedColor != null) {
+		backgroundColor = new Color(selectedColor);
+		canvas.redraw();
+		updateStatus("Background color changed");
+	    }
+	});
+	menuSeparator(viewMenu);
+
 	final var effectsMenuItem = new MenuItem(viewMenu, SWT.CASCADE);
 	effectsMenuItem.setText("&Effects");
 	final var effectsMenu = new Menu(shell, SWT.DROP_DOWN);
@@ -604,7 +617,11 @@ public class MainWindow {
 	final var clientArea = canvas.getClientArea();
 
 	// Fill background
-	gc.setBackground(display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+	if (backgroundColor != null && !backgroundColor.isDisposed()) {
+	    gc.setBackground(backgroundColor);
+	} else {
+	    gc.setBackground(display.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+	}
 	gc.fillRectangle(clientArea);
 
 	// Draw image if available
