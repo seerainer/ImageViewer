@@ -598,6 +598,39 @@
       ]
     },
     {
+      "type": "org.eclipse.swt.internal.win32.CHOOSECOLOR",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "Flags"
+        },
+        {
+          "name": "hInstance"
+        },
+        {
+          "name": "hwndOwner"
+        },
+        {
+          "name": "lCustData"
+        },
+        {
+          "name": "lStructSize"
+        },
+        {
+          "name": "lpCustColors"
+        },
+        {
+          "name": "lpTemplateName"
+        },
+        {
+          "name": "lpfnHook"
+        },
+        {
+          "name": "rgbResult"
+        }
+      ]
+    },
+    {
       "type": "org.eclipse.swt.internal.win32.CHOOSEFONT",
       "jniAccessible": true,
       "fields": [
@@ -2491,6 +2524,21 @@
       ]
     },
     {
+      "type": "org.eclipse.swt.widgets.ColorDialog",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "CCHookProc",
+          "parameterTypes": [
+            "long",
+            "long",
+            "long",
+            "long"
+          ]
+        }
+      ]
+    },
+    {
       "type": "org.eclipse.swt.widgets.Display",
       "jniAccessible": true,
       "methods": [
@@ -2608,6 +2656,9 @@
     },
     {
       "glob": "org/eclipse/swt/internal/SWTMessages_de.properties"
+    },
+    {
+      "glob": "org/eclipse/swt/internal/SWTMessages_de_AT.properties"
     },
     {
       "bundle": "org.eclipse.swt.internal.SWTMessages"
